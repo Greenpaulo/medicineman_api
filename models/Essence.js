@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const EssenceSchema = new mongoose.Schema({
   company: {
@@ -28,8 +29,15 @@ const EssenceSchema = new mongoose.Schema({
   chakrasSecondary: Array,
   meridians: Array,
   meridiansSecondary: Array,
+  elements: Array,
   keywords: Array,
   stock: Boolean
+});
+
+// Middleware to create slug from the name
+EssenceSchema.pre('save', function(next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
 })
 
 module.exports = mongoose.model('Essence', EssenceSchema);

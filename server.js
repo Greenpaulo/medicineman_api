@@ -11,11 +11,15 @@ connectDB();
 
 // Route files
 const essences = require('./routes/essences');
+const chakras = require('./routes/chakras');
+const meridians = require('./routes/meridians');
 
 const app = express();
 
 // Mount routers
 app.use('/api/v1/essences', essences);
+app.use('/api/v1/chakras', chakras);
+app.use('/api/v1/meridians', meridians);
 
 const PORT = process.env.PORT || 5000;
 
