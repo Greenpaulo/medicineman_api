@@ -8,6 +8,7 @@ dotenv.config({ path: './config/config.env'})
 
 // Load models
 const Essence = require('./models/Essence');
+const Reference = require('./models/Reference');
 
 // Connect to DB
 mongoose.connect(process.env.MONGO_URI, {
@@ -36,6 +37,7 @@ const newFlowers = JSON.parse(fs.readFileSync(`${__dirname}/_data/Pacific/newFlo
 const seaEssences = JSON.parse(fs.readFileSync(`${__dirname}/_data/Pacific/seaEssences.json`, 'utf-8'));
 const springFlowers = JSON.parse(fs.readFileSync(`${__dirname}/_data/Pacific/springFlowers.json`, 'utf-8'));
 const weae = JSON.parse(fs.readFileSync(`${__dirname}/_data/WEAE/weae.json`, 'utf-8'));
+const crossreference = JSON.parse(fs.readFileSync(`${__dirname}/_data/CrossReference/crossreference.json`, 'utf-8'));
 
 
 // Import into DB
@@ -58,6 +60,7 @@ const importData = async () => {
     await Essence.create(seaEssences);
     await Essence.create(springFlowers);
     await Essence.create(weae);
+    await Reference.create(crossreference, { checkKeys: false});
     
 
     console.log('Data imported...'.green.inverse);
@@ -71,6 +74,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Essence.deleteMany();
+    await Reference.deleteMany();
 
     console.log('Data deleted...'.red.inverse);
     process.exit();

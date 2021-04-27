@@ -13,6 +13,8 @@ connectDB();
 const essences = require('./routes/essences');
 const chakras = require('./routes/chakras');
 const meridians = require('./routes/meridians');
+const elements = require('./routes/elements');
+const references = require('./routes/references');
 
 const app = express();
 
@@ -20,6 +22,8 @@ const app = express();
 app.use('/api/v1/essences', essences);
 app.use('/api/v1/chakras', chakras);
 app.use('/api/v1/meridians', meridians);
+app.use('/api/v1/elements', elements);
+app.use('/api/v1/references', references);
 
 const PORT = process.env.PORT || 5000;
 

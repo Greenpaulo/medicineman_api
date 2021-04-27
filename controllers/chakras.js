@@ -5,7 +5,7 @@ const Essence = require('../models/Essence')
 // @access    Public
 exports.getEssenceDataByChakra = async (req, res, next) => {
   try {
-    const chakra = req.params.chakra.replace(/_/g, " ");;
+    const chakra = req.params.chakra.replace(/_/g, " ");
     
     const essences = await Essence.find({$or: [{chakras: chakra}, {chakrasSecondary: chakra} ]});
 
@@ -21,7 +21,7 @@ exports.getEssenceDataByChakra = async (req, res, next) => {
 // @access    Public
 exports.getEssenceNamesByChakra = async (req, res, next) => {
   try {
-    const chakra = req.params.chakra.replace(/_/g, " ");;
+    const chakra = req.params.chakra.replace(/_/g, " ");
     
     const essences = await Essence.find({$or: [{chakras: chakra}, {chakrasSecondary: chakra} ]});
 
