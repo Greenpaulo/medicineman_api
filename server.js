@@ -1,7 +1,9 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
+const errorHandler = require('./middleware/error');
 
 // Load env vars
 dotenv.config({ path: './config/config.env'});
@@ -15,8 +17,17 @@ const chakras = require('./routes/chakras');
 const meridians = require('./routes/meridians');
 const elements = require('./routes/elements');
 const references = require('./routes/references');
+const groupInfo = require('./routes/groupInfo');
+const auth = require('./routes/auth');
+const medicines = require('./routes/medicines');
 
 const app = express();
+
+// Body parser
+app.use(express.json());
+
+// Cookie parser
+app.use(cookieParser());
 
 // Mount routers
 app.use('/api/v1/essences', essences);
@@ -24,6 +35,12 @@ app.use('/api/v1/chakras', chakras);
 app.use('/api/v1/meridians', meridians);
 app.use('/api/v1/elements', elements);
 app.use('/api/v1/references', references);
+app.use('/api/v1/groupinfo', groupInfo);
+app.use('/api/v1/auth', auth);
+app.use('/api/v1/medicines', medicines);
+
+// Error handler middleware - define error-handling middleware last, after other app.use() and routes calls
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

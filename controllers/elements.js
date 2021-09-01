@@ -1,41 +1,23 @@
+const asyncHandler = require('../middleware/async');
 const Essence = require('../models/Essence');
+const { checkLengthAndSend, getNamesFromData } = require('../helpers/helpers');
 
 // @desc      Get essence data by element
 // @route     GET /api/v1/elements/essence-data/:element
 // @access    Public
-exports.getEssenceDataByElement = async (req, res, next) => {
-  try {
-    const element = req.params.element.replace(/_/g, " ");
-    console.log(element);
-    
-    const essences = await Essence.find({ elements: element });
+exports.getEssenceDataByElement = asyncHandler(async (req, res, next) => {
+    const essences = await Essence.find({ elements: req.params.element });
 
-    res.status(200).json({ success: true, count: essences.length, data: essences });
-  } catch (err) {
-    res.status(400).json({ success: false, msg: err})
-  }
-};
+    checkLengthAndSend(res, essences, next);
+});
 
 // @desc      Get essence names by element
 // @route     GET /api/v1/elements/essence-names/:element
 // @access    Public
-exports.getEssenceNamesByElement = async (req, res, next) => {
-  try {
-    const element = req.params.element.replace(/_/g, " ");
-    
-    const essences = await Essence.find({ elements: element });
+exports.getEssenceNamesByElement = asyncHandler(async (req, res, next) => {
+    const essences = await Essence.find({ elements: req.params.element });
 
-    const convertEssences = (essences) => {
-      let names = [];
-      essences.forEach(essence => {
-        names.push(essence.name)
-      })
-      return names;
-    }
-    const names = convertEssences(essences);
+    const names = getNamesFromData(essences);
 
-    res.status(200).json({ success: true, count: essences.length, data: names });
-  } catch (err) {
-    res.status(400).json({ success: false, msg: err})
-  }
-};
+    checkLengthAndSend(res, names, next);
+});

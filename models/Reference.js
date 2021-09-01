@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const ReferenceSchema = new mongoose.Schema({
   title: {
@@ -6,8 +7,15 @@ const ReferenceSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  references: Array,
+  titleSlug: String,
+  references: Object,
   related: Array
 });
+
+// Middleware to create slug from the name
+ReferenceSchema.pre('save', function(next) {
+  this.titleSlug = slugify(this.title, { lower: true, replacement: '_' });
+  next();
+})
 
 module.exports = mongoose.model('Reference', ReferenceSchema);
