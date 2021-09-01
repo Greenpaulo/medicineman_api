@@ -1,7 +1,7 @@
 {
-  "name": "medicineman_api",
+  "name": "essences_api",
   "version": "1.0.0",
-  "description": "Backend API for medicineman app",
+  "description": "A Flower Essence API",
   "main": "server.js",
   "scripts": {
     "start": "SET NODE_ENV=production & node server",
