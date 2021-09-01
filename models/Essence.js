@@ -33,7 +33,12 @@ const EssenceSchema = new mongoose.Schema({
   meridiansSecondary: Array,
   elements: Array,
   keywords: Array,
-  images: Array
+  images: Array,
+  // Don't return the stock status
+  stock: {
+    type: Boolean, 
+    select: false
+  }
 });
 
 // Middleware to create slugs
